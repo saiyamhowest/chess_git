@@ -92,3 +92,9 @@ def save_board(self):
             square: str(piece) if piece else None
             for square, piece in self.squares.items()
         }) + "\n")
+
+@staticmethod
+def load_board_states():
+    with open("board.txt", "r") as file:
+        for line in file:
+            yield json.loads(line)        
