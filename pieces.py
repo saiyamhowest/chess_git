@@ -109,3 +109,32 @@ class King(BaseChessPiece):
 
     def move(self):
         print("King moves one square any direction")
+
+def save_board(func):
+    @functools.wraps(func)
+    def wrapper(self, *args, **kwargs):
+        result = func(self, *args, **kwargs)
+        if self.board:
+            self.board.save_board()
+        return result
+    return wrapper        
+
+@save_board
+@print_board
+def move(self, col_offset, row_offset):
+    if self.board is None:
+        print("Error: Piece is not on a board")
+        return
+
+    current_col = self.position[0]
+    current_row = int(self.position[1])
+
+    new_col = chr(ord(current_col) + col_offset)
+    new_row = current_row + row_offset
+
+    if new_col < 'a' or new_col > 'h' or new_row < 1 or new_row > 8:
+        print("Move out of bounds")
+        return
+
+    new_position = f"{new_col}{new_row}"
+    super().move(new_position)
