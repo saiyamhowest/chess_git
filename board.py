@@ -61,3 +61,26 @@ class Board:
                 for col in range(ord('a'), ord('i'))
             ]
             print(row_data)
+
+
+    def get_piece(self, square):
+         return self.squares.get(square)
+
+    def is_square_empty(self, square):
+        return self.get_piece(square) is None
+
+    def kill_piece(self, square):
+        piece = self.get_piece(square)
+        if piece:
+            piece.die()
+            self.squares[square] = None
+
+    def find_piece(self, symbol: str, identifier: int, color: str):
+        return [
+            piece
+            for piece in self.squares.values()
+            if piece is not None
+            and piece.symbol == symbol
+            and piece.identifier == identifier
+            and piece.color == color
+        ]
