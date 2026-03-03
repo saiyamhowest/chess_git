@@ -1,3 +1,4 @@
+import json
 from pieces import Rook, Knight, Bishop, Queen, King, Pawn
     
 
@@ -84,3 +85,10 @@ class Board:
             and piece.identifier == identifier
             and piece.color == color
         ]
+    
+def save_board(self):
+    with open("board.txt", "a") as file:
+        file.write(json.dumps({
+            square: str(piece) if piece else None
+            for square, piece in self.squares.items()
+        }) + "\n")
