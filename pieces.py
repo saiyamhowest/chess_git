@@ -11,9 +11,7 @@ def print_board(func):
         return result
     return wrapper
 
-@print_board
-def move(self, col_offset, row_offset):
-    
+
 class BaseChessPiece(ABC):
 
     def __init__(self, color, name, symbol, identifier):
