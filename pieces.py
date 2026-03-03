@@ -12,9 +12,29 @@ class BaseChessPiece(ABC):
         self.is_alive = True
         self.board = None
 
-    @abstractmethod
-    def move(self):
-        pass
+    def move(self, new_position):
+
+        if self.board is None:
+            print("Error: Piece is not on a board")
+            return
+
+        target_piece = self.board.squares.get(new_position)
+
+    # If square occupied by same color → block
+        if target_piece and target_piece.color == self.color:
+            print("Move blocked by same color piece")
+            return
+
+    # If enemy → kill
+        if target_piece and target_piece.color != self.color:
+            target_piece.die()
+
+    # Clear old square
+        self.board.squares[self.position] = None
+
+    # Move piece
+        self.position = new_position
+        self.board.squares[new_position] = self
 
     def die(self):
         self.is_alive = False
